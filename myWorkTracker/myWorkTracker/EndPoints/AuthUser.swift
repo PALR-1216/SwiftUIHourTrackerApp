@@ -36,6 +36,7 @@ struct User:Decodable {
 class AuthUser:ObservableObject {
     //1. didChange ?
     var name = ""
+    var userId = Int()
     var didChange = PassthroughSubject<AuthUser, Never>()
     
     
@@ -72,6 +73,7 @@ class AuthUser:ObservableObject {
                         self.isLoggedIn = true
                         print(result.userName)
                         self.name = result.userName
+                        self.userId = result.userId
                     }
                     
                     else{

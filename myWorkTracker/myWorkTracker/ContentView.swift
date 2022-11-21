@@ -25,7 +25,7 @@ struct ContentView: View {
         if !self.userAuth.isLoggedIn {
             return AnyView(Login())
         } else {
-            return AnyView(Home(user: userAuth.name))
+            return AnyView(Home())
             
         }
     }
@@ -69,20 +69,6 @@ struct Login : View {
                 .clipShape(CustomShape(corner: .bottomRight, radii: 50))
                 .edgesIgnoringSafeArea(.top)
                 
-//
-//                if !self.userAuth.isLoggedIn {
-//                    HStack{
-//                        HStack{
-//                            Spacer()
-//                            Image(systemName: "exclamationmark.icloud").foregroundColor(Color.white)
-//                            Text("Please LogIn").font(.body).foregroundColor(Color.white)
-//                            Spacer()
-//                        }
-//                    .padding()
-//                        .background(Color.red)
-//                    .cornerRadius(20)
-//                    }.padding()
-//                }
 
                 //Form Field
                 VStack(alignment:.leading){
@@ -169,7 +155,7 @@ struct Login : View {
 //Home View
 struct Home : View {
     @EnvironmentObject var userAuth: AuthUser
-    @State var user: String
+    
     
     
     var body : some View {
@@ -177,7 +163,7 @@ struct Home : View {
             ZStack{
                 Color.purple
                 
-                Text("welcomeUser = \(user)")
+                Text("welcomeUser = \(userAuth.name) userId = \(userAuth.userId)")
                     
                     .navigationBarTitle("Home", displayMode: .inline)
                     .navigationBarItems(trailing:
