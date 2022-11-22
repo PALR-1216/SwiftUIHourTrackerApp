@@ -162,7 +162,7 @@ struct Home : View {
         }
        
         .onAppear {
-            Hours.GetTotalHours()
+            Hours.GetTotalHours(userId: userAuth.userId)
             print(Hours.hours)
         }
      

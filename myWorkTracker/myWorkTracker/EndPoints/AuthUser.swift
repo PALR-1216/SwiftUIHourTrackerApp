@@ -101,14 +101,15 @@ class AuthUser:ObservableObject {
         }.resume()
     }
     
-    func GetTotalHours() {
-        guard let url = URL(string: "https://myworktimetracker.herokuapp.com/api/getUserHours") else{return}
-        let body = ["userId":self.userId]
-        guard let finalBody = try? JSONEncoder().encode(body) else{return}
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        request.httpBody = finalBody
+    func GetTotalHours(userId:Int) {
+        //make a get function to get all the hours from the user
+        guard let url = URL(string: "https://myworktimetracker.herokuapp.com/api/getUserHours/\(userId)") else{return}
+//        let body = ["userId":self.userId]
+//        guard let finalBody = try? JSONEncoder().encode(body) else{return}
+//        var request = URLRequest(url: url)
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request.httpMethod = "POST"
+//        request.httpBody = finalBody
         
         
         URLSession.shared.dataTask(with: url) { Data, _, err in
