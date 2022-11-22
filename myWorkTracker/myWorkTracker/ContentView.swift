@@ -66,7 +66,6 @@ struct Login : View {
                 .frame(height: 180)
                 .padding(30)
                 .background(Color.purple)
-                .clipShape(CustomShape(corner: .bottomRight, radii: 50))
                 .edgesIgnoringSafeArea(.top)
                 
 
@@ -90,25 +89,15 @@ struct Login : View {
                         .autocapitalization(.none)
                     
                     
-                    //8 Peringatan jika salah login
                     if(!self.userAuth.isCorrect){
                         Text("Password or userName is incorrect").foregroundColor(.red)
                     }
                     
-                    //9 peringatan jika field kosong
                     if(self.isEmptyField){
                         Text("Please fill all credentials!").foregroundColor(.red)
                     }
                     
                     
-                    //Forgot Password
-                    HStack{
-                        
-                        Button(action:{}){
-                            Text("Forgot Password?")
-                        }
-                        Spacer()
-                    }.padding([.top,.bottom], 10)
                     
                     //Sign In Button
                     HStack{
@@ -155,49 +144,35 @@ struct Login : View {
 //Home View
 struct Home : View {
     @EnvironmentObject var userAuth: AuthUser
+    @StateObject var Hours = AuthUser()
     
     
     
     var body : some View {
         NavigationView{
-            ZStack{
-                Color.purple
-                
-                Text("welcomeUser = \(userAuth.name) userId = \(userAuth.userId)")
-                    
-                    .navigationBarTitle("Home", displayMode: .inline)
-                    .navigationBarItems(trailing:
-                        
-                        Button(action: {
-                            self.userAuth.isLoggedIn = false
-                            self.userAuth.isCorrect = true
-                            
-                        }){
-                            Image(systemName: "arrowshape.turn.up.right.circle")
-                        }
-                )
+            VStack{
+                ForEach(Hours.hours, id: \.id) { i in
+                    Text(i.dateAdded)
+                }
                 
             }
-        }.ignoresSafeArea()
-    }
-}
+           
+            .navigationTitle("User \(userAuth.name)")
 
-//Custom Shape
-struct CustomShape : Shape {
-    var corner : UIRectCorner
-    var radii : CGFloat
+        }
+       
+        .onAppear {
+            Hours.GetTotalHours()
+            print(Hours.hours)
+        }
+     
+    }
     
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corner, cornerRadii: CGSize(width: radii, height: radii))
-        
-        return Path(path.cgPath)
+    
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
 }
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
-

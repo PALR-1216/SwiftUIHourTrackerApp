@@ -23,6 +23,19 @@ struct User:Decodable {
     let DateAdded:String?
 }
 
+struct Hours:Decodable,Identifiable, Hashable {
+    var id = UUID()
+    let hourId:Int
+    let totalHour:Int
+    let userId:Int
+    let dateAdded:String
+    let totalBreakTime:Double?
+    let TotalEarned:Double
+    let overtimeHours:Double?
+    
+    
+}
+
 //struct User:Decodable {
 //    let token:String
 //}
@@ -38,6 +51,7 @@ class AuthUser:ObservableObject {
     var name = ""
     var userId = Int()
     var didChange = PassthroughSubject<AuthUser, Never>()
+    @Published var hours:[Hours] = []
     
     
     @Published var isCorrect: Bool = true
@@ -77,9 +91,36 @@ class AuthUser:ObservableObject {
                     }
                     
                     else{
+                        self.isLoggedIn = false
+                        self.isCorrect = false
                         print("User was not found")
                     }
                 }
+            }
+            
+        }.resume()
+    }
+    
+    func GetTotalHours() {
+        guard let url = URL(string: "https://myworktimetracker.herokuapp.com/api/getUserHours") else{return}
+        let body = ["userId":self.userId]
+        guard let finalBody = try? JSONEncoder().encode(body) else{return}
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = finalBody
+        
+        
+        URLSession.shared.dataTask(with: url) { Data, _, err in
+            guard let Data = Data, err == nil else{return}
+            
+            
+            let result = try? JSONDecoder().decode([Hours].self, from: Data)
+            
+            DispatchQueue.main.async {
+             
+                self.hours = result ?? []
+                
             }
             
         }.resume()
