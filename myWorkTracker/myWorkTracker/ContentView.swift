@@ -151,16 +151,21 @@ struct Home : View {
     var body : some View {
         NavigationView{
             VStack{
+                HStack{
+                    Text(userAuth.totalMoney,format: .number.precision(.significantDigits(2)))
+                        .font(.largeTitle)
+                    Spacer()
+                    Text("\(userAuth.totalHours)")
+                        .font(.largeTitle)
+                }
+                .padding()
+                
                 List{
                     ForEach(Hours.UserHours, id: \.hourId) { i in
                         HStack{
-                            VStack{
-                                Text("\(i.totalHour)")
+                                Text(i.totalHour, format: .number.precision(.significantDigits(2)))
                                     .font(.body)
-                                Text("TotalHours")
-                                    .foregroundColor(.secondary)
                                 
-                            }
                            
                             Spacer()
                             Text("$")
@@ -176,6 +181,7 @@ struct Home : View {
             }
            
             .navigationTitle("User \(userAuth.name)")
+            
 
         }
        

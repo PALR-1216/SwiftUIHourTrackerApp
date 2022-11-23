@@ -13,6 +13,8 @@ import Combine
 struct User:Decodable {
     let Message:String?
     let Success:String
+    let TotalHours:String
+    let TotalEarned:Double
     let userId:Int
     let userName:String
     let userPassword:String
@@ -23,9 +25,10 @@ struct User:Decodable {
     let DateAdded:String?
 }
 
+
 struct Hours:Decodable {
     let hourId:Int
-    let totalHour:Int
+    let totalHour:Double
     let userId:Int
     let dateAdded:String
     let totalBreakTime:Double?
@@ -49,6 +52,8 @@ class AuthUser:ObservableObject {
     //1. didChange ?
     var name = ""
     var userId = Int()
+    var totalHours = ""
+    var totalMoney = Double()
     var didChange = PassthroughSubject<AuthUser, Never>()
     @Published var UserHours = [Hours]()
     
@@ -94,6 +99,8 @@ class AuthUser:ObservableObject {
                         print(result.userName)
                         self.name = result.userName
                         self.userId = result.userId
+                        self.totalMoney = result.TotalEarned
+                        self.totalHours = result.TotalHours
                     }
                     
                     else{
@@ -125,6 +132,7 @@ class AuthUser:ObservableObject {
                     let decodeData = try JSONDecoder().decode([Hours].self, from: NewData)
                     DispatchQueue.main.async {
                         self.UserHours = decodeData
+                        
                     }
                 }
                 else{
