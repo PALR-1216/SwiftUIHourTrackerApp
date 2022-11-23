@@ -23,8 +23,7 @@ struct User:Decodable {
     let DateAdded:String?
 }
 
-struct Hours:Decodable,Identifiable, Hashable {
-    var id = UUID()
+struct Hours:Decodable {
     let hourId:Int
     let totalHour:Int
     let userId:Int
@@ -51,7 +50,7 @@ class AuthUser:ObservableObject {
     var name = ""
     var userId = Int()
     var didChange = PassthroughSubject<AuthUser, Never>()
-    @Published var hours:[Hours] = []
+    @Published var UserHours = [Hours]()
     
     
     @Published var isCorrect: Bool = true
@@ -60,6 +59,13 @@ class AuthUser:ObservableObject {
         didSet {
             didChange.send(self)
         }
+    }
+    
+ 
+    
+    init() {
+        GetTotalHours(userId: userId)
+        
     }
     
     //3. function checkLogin
@@ -101,6 +107,8 @@ class AuthUser:ObservableObject {
         }.resume()
     }
     
+    
+    
     func GetTotalHours(userId:Int) {
         //make a get function to get all the hours from the user
         guard let url = URL(string: "https://myworktimetracker.herokuapp.com/api/getUserHours/\(userId)") else{return}
@@ -111,19 +119,22 @@ class AuthUser:ObservableObject {
 //        request.httpMethod = "POST"
 //        request.httpBody = finalBody
         
-        
-        URLSession.shared.dataTask(with: url) { Data, _, err in
-            guard let Data = Data, err == nil else{return}
-            
-            
-            let result = try? JSONDecoder().decode([Hours].self, from: Data)
-            
-            DispatchQueue.main.async {
-             
-                self.hours = result ?? []
-                
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            do{
+                if let NewData = data{
+                    let decodeData = try JSONDecoder().decode([Hours].self, from: NewData)
+                    DispatchQueue.main.async {
+                        self.UserHours = decodeData
+                    }
+                }
+                else{
+                    print("error")
+                }
             }
-            
+            catch{
+                print("\(error.localizedDescription)")
+            }
         }.resume()
+        
     }
 }

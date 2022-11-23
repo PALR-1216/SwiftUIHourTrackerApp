@@ -151,10 +151,28 @@ struct Home : View {
     var body : some View {
         NavigationView{
             VStack{
-                ForEach(Hours.hours, id: \.id) { i in
-                    Text(i.dateAdded)
+                List{
+                    ForEach(Hours.UserHours, id: \.hourId) { i in
+                        HStack{
+                            VStack{
+                                Text("\(i.totalHour)")
+                                    .font(.body)
+                                Text("TotalHours")
+                                    .foregroundColor(.secondary)
+                                
+                            }
+                           
+                            Spacer()
+                            Text("$")
+                                Text(i.TotalEarned, format: .currency(code: "currency"))
+                                
+
+                        }
+                    }
+//                        userAuth.GetTotalHours(userId: userAuth.userId)
+
+                    
                 }
-                
             }
            
             .navigationTitle("User \(userAuth.name)")
@@ -163,9 +181,8 @@ struct Home : View {
        
         .onAppear {
             Hours.GetTotalHours(userId: userAuth.userId)
-            print(Hours.hours)
+            
         }
-     
     }
     
     
