@@ -63,12 +63,11 @@
 		B8193B6629258C46008739CB /* myWorkTracker */ = {
 			isa = PBXGroup;
 			children = (
+				B8CE8EAF29302D5E00CA8E0A /* Views */,
 				B88346A8292600A900D88B08 /* EndPoints */,
 				B8DB180D2925D0700087CC59 /* Lotties */,
 				B8193B6729258C46008739CB /* myWorkTrackerApp.swift */,
 				B88346AA292600FB00D88B08 /* ContentView.swift */,
-				B8CE8EAD2930290A00CA8E0A /* AddHourView.swift */,
-				B8CE8EA929301E9200CA8E0A /* SlideMenuView.swift */,
 				B88346A62925D53D00D88B08 /* LottieView.swift */,
 				B8193B6B29258C49008739CB /* Assets.xcassets */,
 				B8193B6D29258C49008739CB /* Preview Content */,
@@ -91,6 +90,15 @@
 				B8784EC929286E47006F09F5 /* AuthUser.swift */,
 			);
 			path = EndPoints;
+			sourceTree = "<group>";
+		};
+		B8CE8EAF29302D5E00CA8E0A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B8CE8EA929301E9200CA8E0A /* SlideMenuView.swift */,
+				B8CE8EAD2930290A00CA8E0A /* AddHourView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		B8DB180D2925D0700087CC59 /* Lotties */ = {
