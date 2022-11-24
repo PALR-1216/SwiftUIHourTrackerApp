@@ -150,6 +150,7 @@ struct Home : View {
     
     
     
+    
     var body : some View {
         NavigationView {
             VStack{
@@ -157,18 +158,29 @@ struct Home : View {
                     VStack{
                         Text("Total Earned")
                             .foregroundColor(.secondary)
-                        Text("$\(userAuth.totalMoney, format: .number.precision(.fractionLength(2)))")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
+                        HStack{
+                            Image(systemName: "dollarsign")
+                                .font(.title)
+                                .foregroundColor(.secondary)
+                            
+                            Text("\(userAuth.totalMoney, format: .number.precision(.fractionLength(2)))")
+                                .font(.title)
+                                .fontWeight(.bold)
+                        }
                     }
                     Spacer()
                     
                     VStack{
                         Text("Total Hours")
                             .foregroundColor(.secondary)
-                        Text("\(userAuth.totalHours)")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
+                        HStack{
+                            Image(systemName: "clock")
+                                .font(.title)
+                                .foregroundColor(.secondary)
+                            Text("\(userAuth.totalHours)")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                        }
                     }
                 }
                 .padding()
@@ -213,12 +225,19 @@ struct Home : View {
                     
                 }
             }
-//            .navigationBarTitle(Text("User \(userAuth.name)"))
+            .navigationBarTitle(Text("User \(userAuth.name)"))
+//            .toolbar {
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                    Button("press") {
+//
+//                    }
+//                }
+//            }
         }
         
         .sheet(isPresented: $isShowing) {
-            Text("hello world")
             //addView Here
+            AddHourView()
         }
     }
     
@@ -244,11 +263,13 @@ struct ListView:View{
                 Image(systemName: "clock")
                 Text("\(Hour)")
                 Spacer()
-                Image(systemName: "dollarsign.circle")
+                Image(systemName: "dollarsign")
                 Text("\(TotalEarned,format: .number.precision(.fractionLength(2)))")
             }
     }
 }
+
+
 
 
 

@@ -14,6 +14,8 @@
 		B8784ECA29286E47006F09F5 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8784EC929286E47006F09F5 /* AuthUser.swift */; };
 		B88346A72925D53D00D88B08 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88346A62925D53D00D88B08 /* LottieView.swift */; };
 		B88346AB292600FB00D88B08 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88346AA292600FB00D88B08 /* ContentView.swift */; };
+		B8CE8EAA29301E9200CA8E0A /* SlideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CE8EA929301E9200CA8E0A /* SlideMenuView.swift */; };
+		B8CE8EAE2930290A00CA8E0A /* AddHourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CE8EAD2930290A00CA8E0A /* AddHourView.swift */; };
 		B8DB180C2925CF910087CC59 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B8DB180B2925CF910087CC59 /* Lottie */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +28,8 @@
 		B8784EC929286E47006F09F5 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = "<group>"; };
 		B88346A62925D53D00D88B08 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		B88346AA292600FB00D88B08 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B8CE8EA929301E9200CA8E0A /* SlideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideMenuView.swift; sourceTree = "<group>"; };
+		B8CE8EAD2930290A00CA8E0A /* AddHourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHourView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,8 @@
 				B8DB180D2925D0700087CC59 /* Lotties */,
 				B8193B6729258C46008739CB /* myWorkTrackerApp.swift */,
 				B88346AA292600FB00D88B08 /* ContentView.swift */,
+				B8CE8EAD2930290A00CA8E0A /* AddHourView.swift */,
+				B8CE8EA929301E9200CA8E0A /* SlideMenuView.swift */,
 				B88346A62925D53D00D88B08 /* LottieView.swift */,
 				B8193B6B29258C49008739CB /* Assets.xcassets */,
 				B8193B6D29258C49008739CB /* Preview Content */,
@@ -173,8 +179,10 @@
 				B8193B6829258C46008739CB /* myWorkTrackerApp.swift in Sources */,
 				B83CCFF329270C950024FFCF /* Network.swift in Sources */,
 				B88346A72925D53D00D88B08 /* LottieView.swift in Sources */,
+				B8CE8EAE2930290A00CA8E0A /* AddHourView.swift in Sources */,
 				B8784ECA29286E47006F09F5 /* AuthUser.swift in Sources */,
 				B88346AB292600FB00D88B08 /* ContentView.swift in Sources */,
+				B8CE8EAA29301E9200CA8E0A /* SlideMenuView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
