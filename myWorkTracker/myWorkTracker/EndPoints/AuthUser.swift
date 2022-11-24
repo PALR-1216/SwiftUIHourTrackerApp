@@ -51,27 +51,26 @@ struct Hours:Decodable {
 class AuthUser:ObservableObject {
     //1. didChange ?
     var name = ""
-    var userId = Int()
-    var totalHours = ""
+    @Published var userId = Int()
+    @Published var totalHours = ""
     var totalMoney = Double()
     var didChange = PassthroughSubject<AuthUser, Never>()
-    @Published var UserHours = [Hours]()
+    @Published  var UserHours = [Hours]()
     
     
     @Published var isCorrect: Bool = true
+    
     //2. run state
     @Published var isLoggedIn:Bool = false {
         didSet {
             didChange.send(self)
         }
     }
+    @Published var isUser:Int = 0
     
  
     
-    init() {
-        GetTotalHours(userId: userId)
-        
-    }
+
     
     //3. function checkLogin
     func checkLogin(userName:String, password:String) {
@@ -101,6 +100,7 @@ class AuthUser:ObservableObject {
                         self.userId = result.userId
                         self.totalMoney = result.TotalEarned
                         self.totalHours = result.TotalHours
+                        self.isUser = result.userId
                     }
                     
                     else{

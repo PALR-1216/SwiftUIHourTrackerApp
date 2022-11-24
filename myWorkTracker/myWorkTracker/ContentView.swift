@@ -35,8 +35,8 @@ struct Login : View {
     @EnvironmentObject var userAuth: AuthUser
     
     @State private var showModal = false
-    @State var username: String = ""
-    @State var password: String = ""
+    @State var username: String = "senpai"
+    @State var password: String = "senpai"
     
     let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
     
@@ -145,49 +145,80 @@ struct Login : View {
 struct Home : View {
     @EnvironmentObject var userAuth: AuthUser
     @StateObject var Hours = AuthUser()
+    @State private var isShowing = false
+    
     
     
     
     var body : some View {
-        NavigationView{
+        NavigationView {
             VStack{
                 HStack{
-                    Text(userAuth.totalMoney,format: .number.precision(.significantDigits(2)))
-                        .font(.largeTitle)
+                    VStack{
+                        Text("Total Earned")
+                            .foregroundColor(.secondary)
+                        Text("$\(userAuth.totalMoney, format: .number.precision(.fractionLength(2)))")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                    }
                     Spacer()
-                    Text("\(userAuth.totalHours)")
-                        .font(.largeTitle)
+                    
+                    VStack{
+                        Text("Total Hours")
+                            .foregroundColor(.secondary)
+                        Text("\(userAuth.totalHours)")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                    }
                 }
                 .padding()
-                
-                List{
-                    ForEach(Hours.UserHours, id: \.hourId) { i in
+                ZStack{
+                    List(Hours.UserHours, id: \.hourId) {i in
+                        
+                        ListView(Hour: "\(i.totalHour)", Date: i.dateAdded, TotalEarned: i.TotalEarned)
+                        
+                          
+                        
+                        
+                    }
+                    .refreshable {
+                        userAuth.GetTotalHours(userId: userAuth.userId)
+                    }
+                    
+                    VStack{
+                        Spacer()
                         HStack{
-                                Text(i.totalHour, format: .number.precision(.significantDigits(2)))
-                                    .font(.body)
-                                
-                           
                             Spacer()
-                            Text("$")
-                                Text(i.TotalEarned, format: .currency(code: "currency"))
+                            Button(action: {
+                                self.isShowing = true
                                 
-
+                            }, label: {
+                                
+                                Text("+")
+                                    .font(.largeTitle)
+                                    .frame(width: 77, height: 70)
+                                    .foregroundColor(Color.white)
+                                    .padding(.bottom, 7)
+                            })
+                            .background(Color.blue)
+                            .cornerRadius(38.5)
+                            .padding()
+                            .shadow(color: Color.black.opacity(0.3),radius: 3, x: 3, y: 3)
                         }
                     }
-//                        userAuth.GetTotalHours(userId: userAuth.userId)
-
+                }
+                
+                .onAppear {
+                    Hours.GetTotalHours(userId: userAuth.userId)
                     
                 }
             }
-           
-            .navigationTitle("User \(userAuth.name)")
-            
-
+//            .navigationBarTitle(Text("User \(userAuth.name)"))
         }
-       
-        .onAppear {
-            Hours.GetTotalHours(userId: userAuth.userId)
-            
+        
+        .sheet(isPresented: $isShowing) {
+            Text("hello world")
+            //addView Here
         }
     }
     
@@ -199,3 +230,59 @@ struct Home : View {
         }
     }
 }
+
+
+
+struct ListView:View{
+    @State var Hour:String
+    @State var Date:String
+    @State var TotalEarned:Double
+    
+    
+    var body: some View{
+            HStack{
+                Image(systemName: "clock")
+                Text("\(Hour)")
+                Spacer()
+                Image(systemName: "dollarsign.circle")
+                Text("\(TotalEarned,format: .number.precision(.fractionLength(2)))")
+            }
+    }
+}
+
+
+
+
+
+////        NavigationView{
+//            VStack{
+////                Text("\(userAuth.isUser)")
+//
+//                HStack{
+//
+//                    Text(userAuth.totalMoney,format: .number.precision(.significantDigits(2)))
+//                        .font(.largeTitle)
+//                        .fontWeight(.bold)
+//                    Spacer()
+//                    Image(systemName: "clock.badge")
+//                    Text("\(userAuth.totalHours)")
+//                        .font(.largeTitle)
+//                        .fontWeight(.bold)
+//                }
+//                .padding()
+//
+//                List(Hours.UserHours, id: \.hourId) { i in
+//                    HStack{
+//
+//
+//                            Text(i.totalHour, format: .number.precision(.significantDigits(2)))
+//                                .font(.body)
+//
+//                        Spacer()
+//                        Text("$")
+//                            Text(i.TotalEarned, format: .currency(code: "currency"))
+//
+//
+//                    }
+//                }
+//            }
