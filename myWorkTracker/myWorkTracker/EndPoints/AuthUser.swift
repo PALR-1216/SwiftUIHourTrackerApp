@@ -56,6 +56,7 @@ class AuthUser:ObservableObject {
     var totalMoney = Double()
     var didChange = PassthroughSubject<AuthUser, Never>()
     @Published  var UserHours = [Hours]()
+    @Published var isLoading: Bool = false
     
     
     @Published var isCorrect: Bool = true
@@ -93,14 +94,13 @@ class AuthUser:ObservableObject {
             if let result = result {
                 DispatchQueue.main.async {
                     if(result.Success == "True") {
-                        print("User was found")
                         self.isLoggedIn = true
-                        print(result.userName)
                         self.name = result.userName
                         self.userId = result.userId
                         self.totalMoney = result.TotalEarned
                         self.totalHours = result.TotalHours
                         self.isUser = result.userId
+                        self.isLoading = false
                     }
                     
                     else{
@@ -109,6 +109,14 @@ class AuthUser:ObservableObject {
                         print("User was not found")
                     }
                 }
+            }
+            else{
+//                print("user was not found")
+                DispatchQueue.main.async {
+                    self.isCorrect = false
+                    self.isLoading = false
+                }
+              
             }
             
         }.resume()

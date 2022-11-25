@@ -90,7 +90,7 @@ struct Login : View {
                     
                     
                     if(!self.userAuth.isCorrect){
-                        Text("Password or userName is incorrect").foregroundColor(.red)
+                        Text("Password or user Name is incorrect").foregroundColor(.red)
                     }
                     
                     if(self.isEmptyField){
@@ -103,13 +103,14 @@ struct Login : View {
                     HStack{
                         Spacer()
                         Button(action: {
-                            
+                       
                          
                             //10 Event cek login
                             if(self.username.isEmpty || self.password.isEmpty){
                                 self.isEmptyField = true
                             }else {
                                 self.userAuth.checkLogin(userName: self.username, password: self.password)
+                                userAuth.isLoading.toggle()
                             }
                         }){
                            
@@ -135,6 +136,10 @@ struct Login : View {
                 
                 Spacer()
             }
+            if(userAuth.isLoading) {
+                ProgressView()
+                    .scaleEffect(2)
+            }
             
             
         }
@@ -146,6 +151,7 @@ struct Home : View {
     @EnvironmentObject var userAuth: AuthUser
     @StateObject var Hours = AuthUser()
     @State private var isShowing = false
+    
     
     
     
@@ -262,9 +268,11 @@ struct ListView:View{
             HStack{
                 Image(systemName: "clock")
                 Text("\(Hour)")
+                    .fontWeight(.bold)
                 Spacer()
                 Image(systemName: "dollarsign")
                 Text("\(TotalEarned,format: .number.precision(.fractionLength(2)))")
+                    .fontWeight(.bold)
             }
     }
 }
