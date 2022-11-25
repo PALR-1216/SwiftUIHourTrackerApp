@@ -17,26 +17,34 @@ struct AddHourView: View {
     var body: some View {
         NavigationView {
             
-            
             VStack{
                 
                 TextField("Enter Amount of Hours Worked", value: $Hours, format: .number)
                     .textFieldStyle(.roundedBorder)
                     .padding()
-                
                 TextField("Enter Amount of Break Time (if any)", value: $BreakTime, format: .number)
                     .textFieldStyle(.roundedBorder)
                     .padding()
+                
                 
                 Picker("Select The break Type", selection: $selected){
                     ForEach(options, id: \.self) {
                         Text($0)
                     }
                 }
+                Spacer()
+                
+                Button {
+                        
+                } label: {
+                    Text("Add")
+                        .fontWeight(.bold)
+                        
+                }
+
             }
             .navigationTitle("Add Hours")
         }
-    
     }
 }
 
